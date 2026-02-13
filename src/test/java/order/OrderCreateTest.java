@@ -31,7 +31,14 @@ public class OrderCreateTest {
 
         user = getRandomUser();
         Response createResponse = userClient.createUser(user);
+
+        // Проверяем, что пользователь создан
+        assertEquals(200, createResponse.statusCode());
+
         token = createResponse.as(ApiResponse.class).getAccessToken();
+
+        // ВАЖНО: проверяем, что токен не null
+        assertNotNull("Токен не должен быть null", token);
     }
 
     @Test
@@ -43,8 +50,8 @@ public class OrderCreateTest {
 
         assertEquals(200, response.statusCode());
 
-        ApiResponse apiResponse = response.as(ApiResponse.class);
-        assertTrue(apiResponse.isSuccess());
+        // Просто проверяем success, не пытаясь распарсить всю структуру
+        assertTrue(response.jsonPath().getBoolean("success"));
     }
 
     @Test

@@ -1,15 +1,21 @@
 package model;
 
+import java.util.List;
+import java.util.Map;
+
 public class ApiResponse {
     private boolean success;
     private String message;
     private String accessToken;
     private String refreshToken;
     private User user;
-    private List<Object> orders;
+    private List<Map<String, Object>> orders;  // ← ИЗМЕНИЛ ТИП!
+    private String name;                        // ← ДОБАВИЛ!
+    private Map<String, Object> order;           // ← ДОБАВИЛ!
 
     public ApiResponse() {}
 
+    // Геттеры и сеттеры для всех полей
     public boolean isSuccess() {
         return success;
     }
@@ -50,11 +56,27 @@ public class ApiResponse {
         this.user = user;
     }
 
-    public List<Object> getOrders() {
+    public List<Map<String, Object>> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<Object> orders) {
+    public void setOrders(List<Map<String, Object>> orders) {
         this.orders = orders;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Map<String, Object> getOrder() {
+        return order;
+    }
+
+    public void setOrder(Map<String, Object> order) {
+        this.order = order;
     }
 }

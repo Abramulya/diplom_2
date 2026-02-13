@@ -1,5 +1,6 @@
 package order;
 
+import ingredient.IngredientHelperTest;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.junit.After;
@@ -8,7 +9,7 @@ import org.junit.Test;
 import client.OrderClientTest;
 import client.UserClientTest;
 import model.*;
-import utils.IngredientHelper;
+import ingredient.IngredientHelperTest;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class UserOrdersTest {
         orderClient = new OrderClientTest();
         userClient = new UserClientTest();
 
-        validIngredients = IngredientHelper.getValidIngredientIds();
+        validIngredients = IngredientHelperTest.getValidIngredientIds();
 
         user = getRandomUser();
         Response createResponse = userClient.createUser(user);

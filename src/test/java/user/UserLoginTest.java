@@ -1,6 +1,10 @@
 package user;
 
 import io.qameta.allure.junit4.DisplayName;
+import io.qameta.allure.restassured.AllureRestAssured;
+import io.restassured.RestAssured;
+import io.restassured.filter.log.LogDetail;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
@@ -10,6 +14,8 @@ import model.User;
 import model.UserCredentials;
 import model.ApiResponse;
 
+
+import static io.restassured.RestAssured.given;
 import static org.junit.Assert.*;
 import static config.UserGenerator.*;
 
@@ -23,16 +29,39 @@ public class UserLoginTest {
         userClient = new UserClientTest();
         user = getRandomUser();
 
-        Response createResponse = userClient.createUser(user);
-        token = createResponse.as(ApiResponse.class).getAccessToken();
+        // Логируем данные пользователя
+        System.out.println("Create user: " + user.getEmail() + " / " + user.getPassword());
+
+        //Response createResponse = userClient.createUser(user);
+
+        RestAssured.baseURI = "https://stellarburgers.education-services.ru";
+        ApiResponse apiResponse = given()
+                .header("Content-type", "application/json")
+                .body(user)
+                .when()
+                .post("/api/auth/register")
+                .as(ApiResponse.class);
+
+
+
+        //ApiResponse apiResponse = createResponse.as(ApiResponse.class);
+        token = apiResponse.getAccessToken();
+        System.out.println(token);
+        //token = createResponse.as(ApiResponse.class).getAccessToken();
+        assertNotNull("Token is null", token);
     }
 
     @Test
     @DisplayName("Логин под существующим пользователем - успех")
     public void loginExistingUserSuccess() {
+        System.out.println("loginExistingUserSuccess");
         UserCredentials credentials = new UserCredentials(user.getEmail(), user.getPassword());
 
         Response response = userClient.loginUser(credentials);
+
+        // Логируем ответ для отладки
+        System.out.println("Login response: " + response.statusCode());
+        System.out.println("Login body: " + response.asString());
 
         assertEquals(200, response.statusCode());
 
@@ -47,6 +76,7 @@ public class UserLoginTest {
     @Test
     @DisplayName("Логин с неверным паролем - ошибка 401")
     public void loginWithWrongPasswordError() {
+        System.out.println("loginWithWrongPasswordError");
         UserCredentials credentials = new UserCredentials(user.getEmail(), "wrongPassword123");
 
         Response response = userClient.loginUser(credentials);
