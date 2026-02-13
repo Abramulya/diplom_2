@@ -26,29 +26,19 @@ public class UserLoginTest {
 
     @Before
     public void setUp() {
-        userClient = new UserClientTest();
-        user = getRandomUser();
+        while (token == null) {
+            userClient = new UserClientTest();
+            user = getRandomUser();
 
-        // Логируем данные пользователя
-        System.out.println("Create user: " + user.getEmail() + " / " + user.getPassword());
+            // Логируем данные пользователя
+            System.out.println("Create user: " + user.getEmail() + " / " + user.getPassword());
 
-        //Response createResponse = userClient.createUser(user);
-
-        RestAssured.baseURI = "https://stellarburgers.education-services.ru";
-        ApiResponse apiResponse = given()
-                .header("Content-type", "application/json")
-                .body(user)
-                .when()
-                .post("/api/auth/register")
-                .as(ApiResponse.class);
+            Response createResponse = userClient.createUser(user);
 
 
-
-        //ApiResponse apiResponse = createResponse.as(ApiResponse.class);
-        token = apiResponse.getAccessToken();
-        System.out.println(token);
-        //token = createResponse.as(ApiResponse.class).getAccessToken();
-        assertNotNull("Token is null", token);
+            ApiResponse apiResponse = createResponse.as(ApiResponse.class);
+            token = createResponse.as(ApiResponse.class).getAccessToken();
+        }
     }
 
     @Test

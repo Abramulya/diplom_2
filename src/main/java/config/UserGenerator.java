@@ -21,8 +21,8 @@ public class UserGenerator {
 
     public static String getRandomPassword() {
         Faker faker = new Faker();
-        String password = faker.harryPotter().character();
-        return password;
+        Integer password = faker.number().numberBetween(100000, 999999999);
+        return Integer.toString(password);
     }
 
     public static String getRandomName() {

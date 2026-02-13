@@ -1,6 +1,7 @@
 package user;
 
 import io.qameta.allure.junit4.DisplayName;
+import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
@@ -9,6 +10,10 @@ import client.UserClientTest;
 import model.User;
 import model.ApiResponse;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static io.restassured.RestAssured.given;
 import static org.junit.Assert.*;
 import static config.UserGenerator.*;
 
@@ -17,22 +22,25 @@ public class UserUpdateTest {
     private User user;
     private String token;
 
+
     @Before
     public void setUp() {
-        userClient = new UserClientTest();
-        user = getRandomUser();
-
-        Response createResponse = userClient.createUser(user);
-        token = createResponse.as(ApiResponse.class).getAccessToken();
+        while (token == null) {
+            userClient = new UserClientTest();
+            user = getRandomUser();
+            Response createResponse = userClient.createUser(user);
+            token = createResponse.as(ApiResponse.class).getAccessToken();
+        }
     }
 
     @Test
     @DisplayName("Изменение email с авторизацией - успех")
     public void updateEmailWithAuthSuccess() {
         String newEmail = getRandomEmail();
-        User updatedUser = new User(newEmail, null, null);
+        Map<String, String> updatedFields = new HashMap<>();
+        updatedFields.put("email", newEmail);
 
-        Response response = userClient.updateUser(updatedUser, token);
+        Response response = userClient.updateUser(updatedFields, token);
 
         assertEquals(200, response.statusCode());
 
@@ -44,10 +52,11 @@ public class UserUpdateTest {
     @Test
     @DisplayName("Изменение имени с авторизацией - успех")
     public void updateNameWithAuthSuccess() {
-        String newName = "NewName" + System.currentTimeMillis();
-        User updatedUser = new User(null, null, newName);
+        String newName = getRandomName();
+        Map<String, String> updatedFields = new HashMap<>();
+        updatedFields.put("name", newName);
 
-        Response response = userClient.updateUser(updatedUser, token);
+        Response response = userClient.updateUser(updatedFields, token);
 
         assertEquals(200, response.statusCode());
 
@@ -59,9 +68,11 @@ public class UserUpdateTest {
     @Test
     @DisplayName("Изменение данных без авторизации - ошибка 401")
     public void updateUserWithoutAuthError() {
-        User updatedUser = new User(null, null, "NewName");
+        String newName = getRandomName();
+        Map<String, String> updatedFields = new HashMap<>();
+        updatedFields.put("name", newName);
 
-        Response response = userClient.updateUserWithoutAuth(updatedUser);
+        Response response = userClient.updateUser(updatedFields, "12345");
 
         assertEquals(401, response.statusCode());
 

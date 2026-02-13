@@ -4,6 +4,8 @@ import io.restassured.response.Response;
 import model.User;
 import model.UserCredentials;
 
+import java.util.Map;
+
 import static io.restassured.RestAssured.given;
 
 public class UserClientTest extends RestClientTest {
@@ -48,5 +50,13 @@ public class UserClientTest extends RestClientTest {
                 .spec(getAuthSpec(token))
                 .when()
                 .delete(USER_UPDATE);
+    }
+
+    public Response updateUser(Map<String, String> fields, String token) {
+        return given()
+                .spec(getAuthSpec(token))
+                .body(fields)  // теперь только те поля, что в Map
+                .when()
+                .patch(USER_UPDATE);
     }
 }
