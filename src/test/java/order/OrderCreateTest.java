@@ -8,7 +8,7 @@ import org.junit.Test;
 import client.OrderClientTest;
 import client.UserClientTest;
 import model.*;
-import utils.IngredientHelper;
+import ingredient.IngredientHelperTest;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class OrderCreateTest {
         orderClient = new OrderClientTest();
         userClient = new UserClientTest();
 
-        validIngredients = IngredientHelper.getValidIngredientIds();
+        validIngredients = IngredientHelperTest.getValidIngredientIds();
 
         user = getRandomUser();
         Response createResponse = userClient.createUser(user);

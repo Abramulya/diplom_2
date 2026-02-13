@@ -13,7 +13,7 @@ public class UserClientTest extends RestClientTest {
 
     public Response createUser(User user) {
         return given()
-                .header("Content-type", "application/json")
+                .spec(getBaseSpec())
                 .body(user)
                 .when()
                 .post(USER_REGISTER);
@@ -21,7 +21,7 @@ public class UserClientTest extends RestClientTest {
 
     public Response loginUser(UserCredentials credentials) {
         return given()
-                .header("Content-type", "application/json")
+                .spec(getBaseSpec())
                 .body(credentials)
                 .when()
                 .post(USER_LOGIN);
@@ -29,7 +29,7 @@ public class UserClientTest extends RestClientTest {
 
     public Response updateUser(User user, String token) {
         return given()
-                .header("Content-type", "application/json")
+                .spec(getAuthSpec(token))
                 .body(user)
                 .when()
                 .patch(USER_UPDATE);
@@ -37,7 +37,7 @@ public class UserClientTest extends RestClientTest {
 
     public Response updateUserWithoutAuth(User user) {
         return given()
-                .header("Content-type", "application/json")
+                .spec(getBaseSpec())
                 .body(user)
                 .when()
                 .patch(USER_UPDATE);
@@ -45,7 +45,7 @@ public class UserClientTest extends RestClientTest {
 
     public Response deleteUser(String token) {
         return given()
-                .header("Content-type", "application/json")
+                .spec(getAuthSpec(token))
                 .when()
                 .delete(USER_UPDATE);
     }
