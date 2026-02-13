@@ -5,7 +5,7 @@ import model.Order;
 
 import static io.restassured.RestAssured.given;
 
-public class OrderClient extends RestClient {
+public class OrderClientTest extends RestClientTest {
     private static final String ORDERS = "/api/orders";
     private static final String INGREDIENTS = "/api/ingredients";
 

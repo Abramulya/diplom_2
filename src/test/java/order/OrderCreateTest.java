@@ -5,8 +5,8 @@ import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import client.OrderClient;
-import client.UserClient;
+import client.OrderClientTest;
+import client.UserClientTest;
 import model.*;
 import utils.IngredientHelper;
 
@@ -16,16 +16,16 @@ import static org.junit.Assert.*;
 import static config.UserGenerator.*;
 
 public class OrderCreateTest {
-    private OrderClient orderClient;
-    private UserClient userClient;
+    private OrderClientTest orderClient;
+    private UserClientTest userClient;
     private User user;
     private String token;
     private List<String> validIngredients;
 
     @Before
     public void setUp() {
-        orderClient = new OrderClient();
-        userClient = new UserClient();
+        orderClient = new OrderClientTest();
+        userClient = new UserClientTest();
 
         validIngredients = IngredientHelper.getValidIngredientIds();
 

@@ -6,7 +6,7 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.qameta.allure.restassured.AllureRestAssured;
 
-public class RestClient {
+public class RestClientTest {
     private static final String BASE_URL = "https://stellarburgers.education-services.ru";
 
     protected RequestSpecification getBaseSpec() {

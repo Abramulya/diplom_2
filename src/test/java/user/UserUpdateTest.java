@@ -5,22 +5,21 @@ import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import client.UserClient;
+import client.UserClientTest;
 import model.User;
-import model.UserCredentials;
 import model.ApiResponse;
 
 import static org.junit.Assert.*;
 import static config.UserGenerator.*;
 
 public class UserUpdateTest {
-    private UserClient userClient;
+    private UserClientTest userClient;
     private User user;
     private String token;
 
     @Before
     public void setUp() {
-        userClient = new UserClient();
+        userClient = new UserClientTest();
         user = getRandomUser();
 
         Response createResponse = userClient.createUser(user);

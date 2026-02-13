@@ -1,5 +1,6 @@
 package config;
 
+import com.github.javafaker.Faker;
 import model.User;
 
 public class UserGenerator {
@@ -13,14 +14,20 @@ public class UserGenerator {
     }
 
     public static String getRandomEmail() {
-        return "testuser" + System.currentTimeMillis() + "@yandex.ru";
+        Faker faker = new Faker();
+        String lastName = faker.name().lastName();
+        return lastName + "@yandex.ru";
     }
 
     public static String getRandomPassword() {
-        return "pass" + (int)(Math.random() * 10000);
+        Faker faker = new Faker();
+        String password = faker.harryPotter().character();
+        return password;
     }
 
     public static String getRandomName() {
-        return "User" + System.currentTimeMillis();
+        Faker faker = new Faker();
+        String firstName = faker.name().firstName();
+        return firstName;
     }
 }
