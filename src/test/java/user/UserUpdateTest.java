@@ -39,7 +39,6 @@ public class UserUpdateTest {
         String newEmail = getRandomEmail();
         Map<String, String> updatedFields = new HashMap<>();
         updatedFields.put("email", newEmail);
-
         Response response = userClient.updateUser(updatedFields, token);
 
         assertEquals(200, response.statusCode());

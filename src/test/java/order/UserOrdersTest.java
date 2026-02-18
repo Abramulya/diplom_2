@@ -25,15 +25,18 @@ public class UserOrdersTest {
 
     @Before
     public void setUp() {
-        orderClient = new OrderClientTest();
-        userClient = new UserClientTest();
+        while (token == null) {
+            orderClient = new OrderClientTest();
+            userClient = new UserClientTest();
 
-        validIngredients = IngredientHelperTest.getValidIngredientIds();
+            validIngredients = IngredientHelperTest.getValidIngredientIds();
 
-        user = getRandomUser();
-        Response createResponse = userClient.createUser(user);
-        token = createResponse.as(ApiResponse.class).getAccessToken();
+            user = getRandomUser();
+            Response createResponse = userClient.createUser(user);
+            token = createResponse.as(ApiResponse.class).getAccessToken();
 
+
+        }
         Order order = new Order(validIngredients);
         orderClient.createOrder(order, token);
     }

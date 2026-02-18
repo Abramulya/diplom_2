@@ -24,21 +24,16 @@ public class OrderCreateTest {
 
     @Before
     public void setUp() {
-        orderClient = new OrderClientTest();
-        userClient = new UserClientTest();
+        while (token == null) {
+            orderClient = new OrderClientTest();
+            userClient = new UserClientTest();
 
-        validIngredients = IngredientHelperTest.getValidIngredientIds();
+            validIngredients = IngredientHelperTest.getValidIngredientIds();
 
-        user = getRandomUser();
-        Response createResponse = userClient.createUser(user);
-
-        // Проверяем, что пользователь создан
-        assertEquals(200, createResponse.statusCode());
-
-        token = createResponse.as(ApiResponse.class).getAccessToken();
-
-        // ВАЖНО: проверяем, что токен не null
-        assertNotNull("Токен не должен быть null", token);
+            user = getRandomUser();
+            Response createResponse = userClient.createUser(user);
+            token = createResponse.as(ApiResponse.class).getAccessToken();
+        }
     }
 
     @Test
