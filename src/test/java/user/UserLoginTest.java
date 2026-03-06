@@ -1,10 +1,6 @@
 package user;
 
 import io.qameta.allure.junit4.DisplayName;
-import io.qameta.allure.restassured.AllureRestAssured;
-import io.restassured.RestAssured;
-import io.restassured.filter.log.LogDetail;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
@@ -14,8 +10,6 @@ import model.User;
 import model.UserCredentials;
 import model.ApiResponse;
 
-
-import static io.restassured.RestAssured.given;
 import static org.junit.Assert.*;
 import static config.UserGenerator.*;
 

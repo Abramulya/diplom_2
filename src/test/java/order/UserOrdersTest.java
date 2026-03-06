@@ -9,7 +9,6 @@ import org.junit.Test;
 import client.OrderClientTest;
 import client.UserClientTest;
 import model.*;
-import ingredient.IngredientHelperTest;
 
 import java.util.List;
 

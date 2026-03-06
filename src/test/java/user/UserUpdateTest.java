@@ -1,7 +1,6 @@
 package user;
 
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
@@ -13,7 +12,6 @@ import model.ApiResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-import static io.restassured.RestAssured.given;
 import static org.junit.Assert.*;
 import static config.UserGenerator.*;
 
